@@ -1,0 +1,8 @@
+const $=i=>document.getElementById(i),s={m:null,t:0,l:0,h:100,d:false,p:0,r:0};
+const log=m=>{const x=document.createElement('div');x.textContent=`[${new Date().toLocaleTimeString()}] ${m}`;logBox.appendChild(x);logBox.scrollTop=1e9};
+const logBox=$('log'),R=()=>{$('baseHp').textContent=Math.max(0,Math.round(s.h));$('leftTime').textContent=s.r?`${Math.max(0,s.l)}s`:'--';$('depot').textContent=s.d?'已摧毁':'未摧毁'};
+async function load(){const[c,m]=await Promise.all([fetch('./story/chapter-01.json').then(r=>r.json()),fetch('./missions/northline-01.json').then(r=>r.json())]);s.m=m;$('chapter').textContent=`${c.title} (${c.id})`;$('mission').textContent=`${m.id} · 地图 ${m.mapId}`;$('startBtn').disabled=false;log('章节与任务配置加载完成。')}
+function end(w,msg){clearInterval(s.r);s.r=0;$('defBtn').disabled=$('assaultBtn').disabled=true;$('startBtn').disabled=false;$('status').textContent=w?'胜利':'失败';log(msg);R()}
+function start(){if(!s.m)return;s.t=0;s.l=s.m.timeLimitSec||720;s.h=100;s.d=false;s.p=0;$('defBtn').disabled=$('assaultBtn').disabled=false;$('startBtn').disabled=true;$('status').textContent='作战中';const W=new Map((s.m.triggers||[]).filter(v=>v.action==='spawn_wave').map(v=>[v.at,v.waveId]));s.r=setInterval(()=>{s.t++;s.l--;if(W.has(s.t)){s.p+=12;log('敌军波次来袭：'+W.get(s.t))}s.h-=Math.max(0,s.p*.03);s.p=Math.max(0,s.p-.25);if(s.h<=0)return end(0,'主基地被摧毁，任务失败。');if(s.l<=0)return end(s.d,s.d?'时间到且补给站已摧毁，任务成功。':'时间到未摧毁补给站，任务失败。');R()},1e3);R()}
+$('loadBtn').onclick=()=>load().catch(e=>log('加载失败:'+e.message));$('startBtn').onclick=start;$('defBtn').onclick=()=>{if(!s.r)return;s.p=Math.max(0,s.p-8);log('已组织防御，压力下降。')};$('assaultBtn').onclick=()=>{if(!s.r||s.d)return;s.d=true;log('补给站已摧毁。');R()};
+log('V0 已就绪：加载章节 -> 开始任务。');
