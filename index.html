@@ -1,1 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project_Genesis.demo</title>
+  <style>
+    :root{--bg:#0b1020;--card:#121a33;--line:#2a355a;--txt:#e6ecff;--muted:#9fb2e8;--ok:#4ade80;--warn:#f59e0b;--bad:#f87171}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    .wrap{max-width:980px;margin:24px auto;padding:0 16px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+    .row{display:flex;gap:10px;flex-wrap:wrap}.btn{padding:10px 14px;border:1px solid #5f8cff;border-radius:10px;background:#172650;color:#dbe7ff;cursor:pointer}
+    .btn:disabled{opacity:.45;cursor:not-allowed}.muted{color:var(--muted)} .ok{color:var(--ok)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+    #log{height:240px;overflow:auto;white-space:pre-wrap;background:#0a1229;border:1px solid #22335f;border-radius:10px;padding:10px}
+    .kv{display:grid;grid-template-columns:160px 1fr;gap:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Project_Genesis.demo</h1>
+      <p class="muted">苏军突袭北线基地 · 最小可玩闭环（V0）</p>
+      <div class="row">
+        <button class="btn" id="loadBtn">加载章节</button>
+        <button class="btn" id="startBtn" disabled>开始任务</button>
+        <button class="btn" id="defBtn" disabled>组织防御（-敌方压力）</button>
+        <button class="btn" id="assaultBtn" disabled>突袭补给站（完成目标）</button>
+      </div>
+    </div>
 
+    <div class="card kv">
+      <div>章节</div><div id="chapter">未加载</div>
+      <div>任务</div><div id="mission">未加载</div>
+      <div>主基地耐久</div><div id="baseHp">100</div>
+      <div>剩余时间</div><div id="leftTime">--</div>
+      <div>补给站状态</div><div id="depot">未摧毁</div>
+      <div>任务状态</div><div id="status" class="muted">等待开始</div>
+    </div>
+
+    <div class="card">
+      <h3>战场日志</h3>
+      <div id="log"></div>
+    </div>
+  </div>
+
+  <script src="./game.js"></script>
+</body>
+  </html>
