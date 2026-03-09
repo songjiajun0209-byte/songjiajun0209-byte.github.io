@@ -1,0 +1,21 @@
+{
+  "id": "northline-01",
+  "mapId": "northline-base-a",
+  "mode": "campaign",
+  "startResources": 5000,
+  "timeLimitSec": 720,
+  "playerSpawn": "P1_BASE",
+  "enemyFactions": ["soviet_raiders"],
+  "winConditions": [
+    { "type": "survive", "seconds": 720 },
+    { "type": "destroy_target", "targetId": "ENEMY_SUPPLY_DEPOT" }
+  ],
+  "loseConditions": [
+    { "type": "base_destroyed", "baseId": "P1_BASE" }
+  ],
+  "triggers": [
+    { "at": 120, "action": "spawn_wave", "waveId": "wave-01" },
+    { "at": 300, "action": "spawn_wave", "waveId": "wave-02" },
+    { "at": 480, "action": "spawn_wave", "waveId": "wave-03" }
+  ]
+}
